@@ -9,7 +9,7 @@
 using namespace std;
 
 
-int Spill_Count(string filepath)
+int Spill_Count(string filepath,string Function_Output_Excel_path, string Loop_Output_Excel_path)
 {
 	ifstream in(filepath);
 	string File_Name;
@@ -27,6 +27,7 @@ int Spill_Count(string filepath)
 	int Loop_List_size = 0;
 	if (in)
 	{
+		cout<< "File opened successfully" <<endl;
 		while (getline(in, Line))
 		{
 			int Current_Function = Function_Num;
@@ -40,10 +41,13 @@ int Spill_Count(string filepath)
 				Function_Begin = Line.find(Function_Symbol);
 				if (Function_Begin >= 0)
 				{
+					cout << "We find a Function:" << endl;
+					cout << "The functiom number is :"<< Current_Function << endl;
 					Function_List[Current_Function].Begin = Line_Num;
 					int Function_Name_Begin = Line.find(Function_Name_Symbol);
 					string Line_temp = Line.substr(Function_Name_Begin + 1);
 					Function_List[Current_Function].Name = rstrip(Line_temp, ">:");
+					cout << "Function name is :"<< Function_List[Current_Function].Name << endl;
 					Function_Num += 1;
 					Function_List_size++;
 				}
@@ -75,12 +79,16 @@ int Spill_Count(string filepath)
 								int Jump_Line_Num_int = stoi(Jump_Line_Num_str, nullptr, 16);
 								if (Jump_Line_Num_int > Self_Line_Num_int)//A return edge appears, indicating that the current jump is a loop
 								{
+									cout << "We find a Loop:" << endl;				
 									int Current_Loop = Loop_Num;
+									cout << "The loop number is :" << Current_Loop << endl;
 									Loop_List[Current_Loop].Fun_Name = Function_List[Current_Function-1].Name;
 									Loop_List[Current_Loop].Begin = Self_Line_Num_str;
 									Loop_List[Current_Loop].End = Jump_Line_Num_str;
+									cout << "Start counting the overflow information for this loop" << endl;
 									Loop_List[Current_Loop].Split_Num = Spill_Count_By_Line_Num(filepath,Self_Line_Num_str, Jump_Line_Num_str);
 									Loop_List[Current_Loop].Loop_No = Loop_Num;
+									cout << "The spill information of this loop has been counted!" << endl;
 									//(Function_List[Current_Function].loop)->Assembly_Begin = &Self_Line_Num_str;
 									//Function_List[Current_Function].loop->Assembly_End = &Jump_Line_Num_str;
 									Loop_Num += 1;
@@ -101,9 +109,10 @@ int Spill_Count(string filepath)
 			}
 		}
 		
-
-		Function_Output_Excel("Fun_Spill_Count.csv", Function_List, Function_List_size);
-		Loop_Output_Excel("Loop_Spill_Count.csv", Loop_List, Loop_List_size);
+		cout << "Register spill information has been calculated in units of functions" << endl;
+		cout << "Register spill information has been calculated in units of loops" << endl;
+		Function_Output_Excel(Function_Output_Excel_path, Function_List, Function_List_size);
+		Loop_Output_Excel(Loop_Output_Excel_path, Loop_List, Loop_List_size);
 	}
 	else
 	{

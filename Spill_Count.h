@@ -7,8 +7,8 @@ using namespace std;
 
 
 #define Code_part 10
-#define Max_Loop_Num 200
-#define Max_Fun_Num 100
+#define Max_Loop_Num 2000
+#define Max_Fun_Num 1000
 
 class Function {
 	public:
@@ -40,6 +40,6 @@ Loop::Loop(void)
 }*/
 
 
-int Spill_Count(string filepath);
+int Spill_Count(string filepath, string Function_Output_Excel_path, string Loop_Output_Excel_path);
 
 int Spill_Count_By_Line_Num(string filepath, string Begin_Line_Num_str, string End_Line_Num_str);
