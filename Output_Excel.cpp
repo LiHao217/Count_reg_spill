@@ -27,7 +27,11 @@ int Loop_Output_Excel(string filepath, Loop Loop_List[], int Loop_List_size)
 	oFile << "Functio_Name" << "," << "Loop" << "," << "Bengin"  << "," << "End" << "," << "Split_Num" << endl;
 	for (int i = 0; i < Loop_List_size; i++)
 	{
-		oFile << Loop_List[i].Fun_Name << "," << Loop_List[i].Loop_No<< "," << Loop_List[i].Begin << "," << Loop_List[i].End << "," << Loop_List[i].Split_Num  << endl;
+		if (Loop_List[i].Loop_No >= 0)
+		{
+			oFile << Loop_List[i].Fun_Name << "," << Loop_List[i].Loop_No<< "," << Loop_List[i].Begin << "," << Loop_List[i].End << "," << Loop_List[i].Split_Num  << endl;
+	
+		}
 	}
 	oFile.close();
 

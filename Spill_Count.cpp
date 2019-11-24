@@ -23,6 +23,8 @@ int Spill_Count(string filepath,string Function_Output_Excel_path, string Loop_O
 	int Loop_Num = 0;
 	Function Function_List[Max_Fun_Num] = {0};
 	Loop Loop_List[Max_Loop_Num];
+	string Backwards_Jump[Max_Loop_Num][2]; //The first dimension represents the number of rows where the jump is, and the second dimension represents the number of rows where the jump is
+	int Backwards_Jump_Num = 0;
 	int Function_List_size=0;
 	int Loop_List_size = 0;
 	if (in)
@@ -77,16 +79,20 @@ int Spill_Count(string filepath,string Function_Output_Excel_path, string Loop_O
 								string Jump_Line_Num_str = Line.substr(37, 6);
 								int Self_Line_Num_int = stoi(Self_Line_Num_str, nullptr, 16);
 								int Jump_Line_Num_int = stoi(Jump_Line_Num_str, nullptr, 16);
-								if (Jump_Line_Num_int > Self_Line_Num_int)//A return edge appears, indicating that the current jump is a loop
+								/*
+								There is an instruction to jump to the previous code, but this does not prove that this is a return, 
+								because it does not prove that there is no other path to jump to this area
+								*/
+								if (Jump_Line_Num_int < Self_Line_Num_int)
 								{
 									cout << "We find a Loop:" << endl;				
 									int Current_Loop = Loop_Num;
 									cout << "The loop number is :" << Current_Loop << endl;
 									Loop_List[Current_Loop].Fun_Name = Function_List[Current_Function-1].Name;
-									Loop_List[Current_Loop].Begin = Self_Line_Num_str;
-									Loop_List[Current_Loop].End = Jump_Line_Num_str;
+									Loop_List[Current_Loop].Begin =  Jump_Line_Num_str;
+									Loop_List[Current_Loop].End = Self_Line_Num_str;
 									cout << "Start counting the overflow information for this loop" << endl;
-									Loop_List[Current_Loop].Split_Num = Spill_Count_By_Line_Num(filepath,Self_Line_Num_str, Jump_Line_Num_str);
+									Loop_List[Current_Loop].Split_Num = Spill_Count_By_Line_Num(filepath, Jump_Line_Num_str,Self_Line_Num_str);
 									Loop_List[Current_Loop].Loop_No = Loop_Num;
 									cout << "The spill information of this loop has been counted!" << endl;
 									//(Function_List[Current_Function].loop)->Assembly_Begin = &Self_Line_Num_str;
@@ -94,6 +100,13 @@ int Spill_Count(string filepath,string Function_Output_Excel_path, string Loop_O
 									Loop_Num += 1;
 									Loop_List_size++;
 									//printf("2");
+								}
+								else
+								{
+									//The jump is backwards
+									Backwards_Jump[Backwards_Jump_Num][0] = Self_Line_Num_str;
+									Backwards_Jump[Backwards_Jump_Num][1] = Jump_Line_Num_str;
+									Backwards_Jump_Num++;
 								}
 
 
@@ -108,10 +121,24 @@ int Spill_Count(string filepath,string Function_Output_Excel_path, string Loop_O
 				//cout << Line << endl;
 			}
 		}
-		
+		/*
+		Remove nodes that are not return edges from the existing Loop List
+		*/
+		for (int i = 0; i < Backwards_Jump_Num; ++i)
+		{
+			if (Loop_List[i].Begin > Backwards_Jump[i][0] && Loop_List[i].Begin < Backwards_Jump[i][1])
+			{
+				cout<<"Area " <<Loop_List[i].Loop_No <<" has other entries. It's not a loop" << endl;
+				//This indicates that there are other entrances to the area, which is not a loop
+				Loop_List[i].Loop_No = -1;
+				
+			}
+		}
 		cout << "Register spill information has been calculated in units of functions" << endl;
 		cout << "Register spill information has been calculated in units of loops" << endl;
 		Function_Output_Excel(Function_Output_Excel_path, Function_List, Function_List_size);
+		
+
 		Loop_Output_Excel(Loop_Output_Excel_path, Loop_List, Loop_List_size);
 	}
 	else
@@ -168,3 +195,15 @@ int Spill_Count_By_Line_Num(string filepath,string Begin_Line_Num_str, string En
 	return Split_Num;
 
 }
+
+/*
+void Delete_Non_Return_Edges(Loop Loop_List[], int Loop_List_size)
+{
+	string Line;
+	string Spill_Symbol = "(%";
+	int Line_Num = 1;
+	int Loop_Num = 0;
+	int Split_Num = 0;
+	bool Count_Begin = false;
+}
+*/
