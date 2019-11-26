@@ -1,0 +1,15 @@
+Functio_Name,Functio_Line_Num,Bengin,Split_Num,End
+_init,9,8,1,17
+printf@plt-0x10,4,19,3,23
+printf@plt,4,24,1,28
+__libc_start_main@plt,4,29,1,33
+__gmon_start__@plt,5,34,1,39
+_start,13,41,0,54
+deregister_tm_clones,24,55,9,79
+register_tm_clones,33,80,12,113
+__do_global_dtors_aux,13,114,2,127
+frame_dummy,7,128,0,135
+main,27,136,11,163
+__libc_csu_init,38,164,5,202
+__libc_csu_fini,3,203,0,206
+_fini,3,208,0,211

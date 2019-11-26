@@ -25,6 +25,8 @@ class Loop
 	public:
 		string Begin = "";
 		string End = "";
+		int Begin_int = 0;
+		int End_int = 0;
 		int Split_Num = 0;
 		string Fun_Name = "";
 		int Loop_No = 0;
@@ -40,6 +42,6 @@ Loop::Loop(void)
 }*/
 
 
-int Spill_Count(string filepath, string Function_Output_Excel_path, string Loop_Output_Excel_path);
+int Spill_Count(string filepath, string Function_Output_Excel_path, string Loop_Output_Excel_path, bool Remove_Library_Function);
 
 int Spill_Count_By_Line_Num(string filepath, string Begin_Line_Num_str, string End_Line_Num_str);

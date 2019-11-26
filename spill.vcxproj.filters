@@ -46,5 +46,8 @@
     <ClInclude Include="Branch_Jump_Insn.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="Library_Function.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Branch_Jump_Insn.h" />
+    <ClInclude Include="Library_Function.h" />
     <ClInclude Include="Output_Excel.h" />
     <ClInclude Include="Spill_Count.h" />
     <ClInclude Include="strip.h" />
