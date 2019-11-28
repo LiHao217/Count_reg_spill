@@ -21,10 +21,10 @@
     <ClCompile Include="strip.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Spill_Count.cpp">
+    <ClCompile Include="Output_Excel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Output_Excel.cpp">
+    <ClCompile Include="Spill_Count_Compile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -37,9 +37,6 @@
     <ClInclude Include="strip.h">
       <Filter>源文件</Filter>
     </ClInclude>
-    <ClInclude Include="Spill_Count.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="Output_Excel.h">
       <Filter>源文件</Filter>
     </ClInclude>
@@ -47,6 +44,9 @@
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="Library_Function.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Spill_Count.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>

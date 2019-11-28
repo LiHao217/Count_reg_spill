@@ -153,7 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Output_Excel.cpp" />
     <ClCompile Include="spill.cpp" />
-    <ClCompile Include="Spill_Count.cpp" />
+    <ClCompile Include="Spill_Count_Compile.cpp" />
     <ClCompile Include="strip.cpp" />
   </ItemGroup>
   <ItemGroup>

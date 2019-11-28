@@ -13,7 +13,7 @@
 using namespace std;
 
 
-int Spill_Count(string filepath,string Function_Output_Excel_path, string Loop_Output_Excel_path,bool Remove_Library_Function)
+int Spill_Count_Objdump(string filepath,string Function_Output_Excel_path, string Loop_Output_Excel_path,bool Remove_Library_Function)
 {
 	ifstream in(filepath);
 	string File_Name;
@@ -125,7 +125,7 @@ int Spill_Count(string filepath,string Function_Output_Excel_path, string Loop_O
 										Forward_Jump[Forward_Jump_Num][0] = Self_Line_Num_int;
 										Forward_Jump[Forward_Jump_Num][1] = Jump_Line_Num_int;
 										Forward_Jump_Num++;
-										cout << "Start counting the overflow information for this region" << endl;
+										cout << "Start counting the spill information for this region" << endl;
 										Loop_List[Current_Loop].Split_Num = Spill_Count_By_Line_Num(filepath, Jump_Line_Num_str, Self_Line_Num_str);
 										Loop_List[Current_Loop].Loop_No = Loop_Num;
 										cout << "The spill information of this region has been counted!" << endl;
