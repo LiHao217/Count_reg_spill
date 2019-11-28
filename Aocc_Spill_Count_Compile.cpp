@@ -13,7 +13,7 @@
 using namespace std;
 
 
-int Spill_Count_Compile(string filepath,string Function_Output_Excel_path, string Loop_Output_Excel_path,bool Remove_Library_Function, string Compiler)
+int Aocc_Spill_Count_Compile(string filepath,string Function_Output_Excel_path, string Loop_Output_Excel_path,bool Remove_Library_Function)
 {
 	ifstream in2(filepath);
 	
@@ -30,17 +30,9 @@ int Spill_Count_Compile(string filepath,string Function_Output_Excel_path, strin
 			int strline = Line.size();
 			if (Line[0] == '.')
 			{
-				if (Compiler == "Gcc")
-				{
-					BB[Basic_Black_Num].Basic_Black_Name = rstrip(Line, ":");
-				}
-				else if(Compiler == "Aocc")
-				{
-					BB[Basic_Black_Num].Basic_Black_Name = rstrip(rstrip(Line.substr(0, 10), " "), ":");
-				}
+				BB[Basic_Black_Num].Basic_Black_Name = rstrip(rstrip(Line.substr(0, 10), " "),":");
 				BB[Basic_Black_Num].Line_Num = Line_Num2;
 				Basic_Black_Num++;
-				
 			}
 		}
 	}
@@ -120,16 +112,8 @@ int Spill_Count_Compile(string filepath,string Function_Output_Excel_path, strin
 					Function_List[Current_Function_Num - 1].Line_Num += 1;
 				}
 				if (Line[0] == '.')
-				{	
-					if (Compiler == "Gcc")
-					{
-						Current_Basic_Block = rstrip(Line, ":");
-					}
-					else if (Compiler == "Aocc")
-					{
-						Current_Basic_Block = rstrip(rstrip(Line.substr(0, 10), " "), ":");
-					}
-					
+				{
+					Current_Basic_Block = rstrip(Line, ":");
 				}
 				//Count register spill by loop
 				if (Find_New_Function)
@@ -142,21 +126,12 @@ int Spill_Count_Compile(string filepath,string Function_Output_Excel_path, strin
 						{
 							try
 							{
-
 								string Self_Line_Num_str = Current_Basic_Block;
 								string Jump_Line_Num_str = "";
 								int Jump_Label = Line.find(Label_Symbol);
 								if (Jump_Label > 0)
 								{
-									if (Compiler == "Gcc")
-									{
-										Jump_Line_Num_str = rstrip(Line.substr(Jump_Label, 6), " ");
-									}
-									else if (Compiler == "Aocc")
-									{
-										Jump_Line_Num_str = rstrip(rstrip(Line.substr(Jump_Label, 10), " "), ":");
-									}
-									
+									Jump_Line_Num_str = rstrip(Line.substr(Jump_Label, 6), " ");
 								}
 								string Self_Line_Num_str_temp = lstrip(Current_Basic_Block, ".L");
 								string Jump_Line_Num_str_temp = lstrip(Jump_Line_Num_str, ".L");

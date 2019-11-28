@@ -50,7 +50,8 @@ public:
 };
 
 int Spill_Count_Objdump(string filepath, string Function_Output_Excel_path, string Loop_Output_Excel_path, bool Remove_Library_Function);
-int Spill_Count_Compile(string filepath, string Function_Output_Excel_path, string Loop_Output_Excel_path, bool Remove_Library_Function);
+int Spill_Count_Compile(string filepath, string Function_Output_Excel_path, string Loop_Output_Excel_path, bool Remove_Library_Function, string Compiler);
+//int Aocc_Spill_Count_Compile(string filepath, string Function_Output_Excel_path, string Loop_Output_Excel_path, bool Remove_Library_Function);
 int Spill_Count_By_Line_Num(string filepath, string Begin_Line_Num_str, string End_Line_Num_str);
 int Spill_Count_By_Line_Num(string filepath, int Begin_Line_Num_int, int End_Line_Num_int);
 Basic_Black *Find_Basic_Black(string filepath);
